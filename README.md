@@ -1,2 +1,2 @@
-# locally
+# locally.earth
 Locally.Earth
