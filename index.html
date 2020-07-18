@@ -9730,7 +9730,7 @@ Error message and password prompt
 <div title="$:/status/RequireReloadDueToPluginChange">
 <pre>no</pre>
 </div>
-<div list="locally.earth" title="$:/StoryList">
+<div created="20200718205947471" list="locally.earth Delivery Reputation Order Store Product Ling" modified="20200718210110981" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -9746,7 +9746,7 @@ Error message and password prompt
         },
         &quot;$:/info/startup-timestamp&quot;: {
             &quot;title&quot;: &quot;$:/info/startup-timestamp&quot;,
-            &quot;text&quot;: &quot;20200718203038182&quot;
+            &quot;text&quot;: &quot;20200718204758553&quot;
         },
         &quot;$:/info/url/full&quot;: {
             &quot;title&quot;: &quot;$:/info/url/full&quot;,
@@ -9974,14 +9974,25 @@ mix phx.gen.context Earth Ling lings name:string last_name:string telephone:stri
 
 </pre>
 </div>
-<div created="20200718131649240" modified="20200718204515488" tags="concept" title="locally.earth">
+<div created="20200718131649240" modified="20200718210510640" tags="concept" title="locally.earth">
 <pre>!!!A distributed local libre marketplace. [[locally.earth]] brings local shops into the digital age. Covid has made it very clear that we need a way for local stores to be on the internet to facilitate their digital transformation. [[locally.earth]] provides a distributed marketplace that can be used by anybody. 
 
 
 
 !! Roadmap
 !!! Iteration 1: 
-Goal: allow for [[Store]]s to have a virtual [[Store Front]]. Allow for [[Store]]s to plan their pick ups so [[Buyer]]s can be distributed in time slots to avoid everybody coming at once.
+Goal: allow for [[Store]]s to have a virtual [[Store Front]]. Allow for [[Store]]s to plan their pick ups so [[Buyer]]s can be distributed in time slots to avoid everybody coming at once. 
+
+!!!! [[Buyer]] benefits:
+
+* Spend the time from home selecting what to buy, easy to maintain social distance.
+* Save time in the [[Store]] [[Order]] is ready to pick up pay and go.
+
+!!!! [[Seller]] benefits:
+
+* Plan and allocate slots for [[Buyers]], less people at once together in the [[Store]]
+
+
 
 !!! Iteration 2:
 Goal: enable [[Delivery]]
@@ -10027,8 +10038,8 @@ mix phx.gen.context Market Product products name:string dimensions:string weight
 <div created="20200718140138288" modified="20200718140246377" title="Reputation">
 <pre>Represents a summary of the interaction between [[Ling]]s. Succesful transactions provide points. This could be stored in public places like a blockchain. </pre>
 </div>
-<div created="20200718134431754" modified="20200718134814203" title="Store">
-<pre>Describes the relationship between a [[Ling]] of type [[Seller]] and their [[Products]]. They provide [[Stock]] that can be consume by other [[Lings]].
+<div created="20200718134431754" modified="20200718210059722" tags="ecto" title="Store">
+<pre>Describes the relationship between a [[Ling]] of type [[Seller]] and their [[Products]]. They provide [[Stock]] that can be consumed by other [[Lings]].
 It contais [[many-to-many]] products and has an owner [[Ling]].
 
 ```
