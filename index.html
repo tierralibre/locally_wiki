@@ -205,6 +205,8 @@ Error message and password prompt
 
 <li>locally.earth</li>
 
+<li>many-to-many</li>
+
 <li>Order</li>
 
 <li>Product</li>
@@ -9730,7 +9732,7 @@ Error message and password prompt
 <div title="$:/status/RequireReloadDueToPluginChange">
 <pre>no</pre>
 </div>
-<div created="20200718205947471" list="locally.earth Delivery Reputation Order Store Product Ling" modified="20200718210110981" title="$:/StoryList">
+<div created="20200718213054421" list="locally.earth Delivery Order Store many-to-many Product Ling" modified="20200718213851809" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -9746,7 +9748,7 @@ Error message and password prompt
         },
         &quot;$:/info/startup-timestamp&quot;: {
             &quot;title&quot;: &quot;$:/info/startup-timestamp&quot;,
-            &quot;text&quot;: &quot;20200718204758553&quot;
+            &quot;text&quot;: &quot;20200718213050416&quot;
         },
         &quot;$:/info/url/full&quot;: {
             &quot;title&quot;: &quot;$:/info/url/full&quot;,
@@ -9934,11 +9936,12 @@ Error message and password prompt
 <div created="20200718142105203" modified="20200718142108620" title="$:/themes/tiddlywiki/vanilla/metrics/tiddlerwidth">
 <pre>1000px</pre>
 </div>
-<div created="20200718140324659" modified="20200718140605785" title="Delivery">
+<div created="20200718140324659" modified="20200718213201172" title="Delivery">
 <pre>Representing the [[Delivery]] of an [[Order]] from a [[Store]] to a [[Ling]]. 
 
 
 ```
+phx.gen.live
 mix phx.gen.context Market Delivery deliveries pick_up_coordinates:string, delivery_coordinates:string order:order pick_up_time:datetime delivery_time:datetime status:string notes:text
 ```
 
@@ -9962,13 +9965,13 @@ Before you start storing important information in ~TiddlyWiki it is vital to mak
 See the [[control panel|$:/ControlPanel]] for more options.
 </pre>
 </div>
-<div created="20200718131906281" modified="20200718134852847" tags="ecto" title="Ling">
+<div created="20200718131906281" modified="20200718213459246" tags="ecto" title="Ling">
 <pre>A Ling [sort for [[Earthling]]] represents a real world entity [[person]] [[organization]] [[group]] in [[locally.earth]] we need a unique id to be able to find the users and some kind of way to validate the identity [[credentials]] [[2fa]]
 
 A ling will have a role, so it can act in different functions. For example [[Buyer]] [[Seller]]
 
 ```
-mix phx.gen.context Earth Ling lings name:string last_name:string telephone:string email:string role:string reputation:string
+phx.gen.live Earth Ling lings name:string last_name:string telephone:string:unique email:string:unique role:string reputation:string
 ```
 
 
@@ -10016,21 +10019,31 @@ Goal: enable other [[Payment]]s than cash.
 * [[Delivery]]
 </pre>
 </div>
-<div created="20200718134918810" modified="20200718183214016" tags="ecto" title="Order">
+<div created="20200718213856805" modified="20200718214022216" title="many-to-many">
+<pre>Ecto many-to-many
+
+https://medium.com/coletiv-stories/ecto-elixir-many-to-many-relationships-66403933f8c1
+
+
+</pre>
+</div>
+<div created="20200718134918810" modified="20200718213637215" tags="ecto" title="Order">
 <pre>Represents the agreement between a [[Store]] and a [[Ling]] to buy a specific amount of [[Products]] at specific [[price]]s. The [[Buyer]] places the [[Order]] which makes the [[Order]][[status]] to go to [[placed]]. 
 The [[Store]] gets notified and it must either [[accept]] or [[decline]] the [[Order]]. if accepted then the status goes to accepted and the [[Store]] provides a time when the the delivery will be available for pick up. If the order is [[declined]] the store set ups the notes on why and the buyer gets notified. Once the [[Order]] is [[completed]] the [[Ling]]s involved can provide a [[Rating]] the rating will allow the [[Reputation]] to be build for each [[Ling]].
 
 
 ```
-mix phx.gen.context Market Order orders buyer:ling store:store products:product status:string delivery_time:datetime notes:text ratings:rating
+phx.gen.live Market Order orders 
+buyer_id:references:lings store_id:references:stores products:product status:string delivery_time:datetime notes:text ratings:rating
 ```
 </pre>
 </div>
-<div created="20200718133547934" modified="20200718134839340" tags="ecto" title="Product">
+<div created="20200718133547934" modified="20200718213116955" tags="ecto" title="Product">
 <pre>A product represent a physical object that somebody wants to sell. It is described by a [[name]], [[dimensions]], [[weight]], [[photo]], [[barcode]].
 
 
 ```
+phx.gen.live
 mix phx.gen.context Market Product products name:string dimensions:string weight:string photo:string barcode:string price:string quantity:integer 
 ```
 </pre>
@@ -10038,12 +10051,12 @@ mix phx.gen.context Market Product products name:string dimensions:string weight
 <div created="20200718140138288" modified="20200718140246377" title="Reputation">
 <pre>Represents a summary of the interaction between [[Ling]]s. Succesful transactions provide points. This could be stored in public places like a blockchain. </pre>
 </div>
-<div created="20200718134431754" modified="20200718210059722" tags="ecto" title="Store">
+<div created="20200718134431754" modified="20200718213435939" tags="ecto" title="Store">
 <pre>Describes the relationship between a [[Ling]] of type [[Seller]] and their [[Products]]. They provide [[Stock]] that can be consumed by other [[Lings]].
-It contais [[many-to-many]] products and has an owner [[Ling]].
+It contains [[many-to-many]] products and has an owner [[Ling]].
 
 ```
-mix phx.gen.context Market Store stores name:string stock:string owner:ling
+phx.gen.live Market Store stores name:string stock:string owner_id:references:lings
 ```
 
 </pre>
